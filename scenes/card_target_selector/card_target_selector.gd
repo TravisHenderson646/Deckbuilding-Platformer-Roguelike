@@ -44,13 +44,14 @@ func ease_out_cubic(number: float) -> float:
 
 func _on_card_aim_started(card: CardUI) -> void:
 	if not card.card.is_single_targeted():
+		print('debug: aimed a non aimer')
 		return
 	
 	targeting = true
 	area_2d.monitoring = true
 	area_2d.monitorable = true
 	current_card = card
-	
+
 
 func _on_card_aim_ended(_card: CardUI) -> void:
 	targeting = false
@@ -71,5 +72,6 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 func _on_area_2d_area_exited(area: Area2D) -> void:
 	if not current_card or not targeting:
 		return
-		
-	current_card.targets.erase(area)
+	
+	if current_card.targets.has(area):
+		current_card.targets.erase(area)
